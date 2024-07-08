@@ -225,57 +225,68 @@ public class App {
         
 
 
-        File directory = new File(directoryPath);
-        File fileList[] = directory.listFiles();
+         try{
             
-        if(fileList.length == 0){
+            File directory = new File(directoryPath);
+            File fileList[] = directory.listFiles();
+
+
+            for (File file : fileList) {
+                if(file.isDirectory()){    
+                    readDirectory(apk, file.toString(), fileType);
+                }else{
+                    String fileStr = file.toString();
+    
+                    if(!(fileStr.substring(fileStr.lastIndexOf(".")+1 ).equals(fileType))){
+                        continue;
+                    }
+    
+    
+                    int i = 1;
+    
+                    System.out.println("Reading file :: "+(i++));
+    
+                    try(BufferedReader br = new BufferedReader(new FileReader(file))){
+                        String line, text = "";
+                
+                        while((line=br.readLine() ) != null){
+                            text += line;
+                            text += "\n";
+                        }
+                        System.out.println(text);
+                
+                        text = replaceWordInText(apk,text);
+                
+                        System.out.println();
+                        System.out.println("changed text :: "+text);
+                        System.out.println();
+                
+                        try(BufferedWriter bw = new BufferedWriter( new FileWriter(file))){
+                            bw.write(text);
+                            System.out.println("Written successfully!!!");
+
+                            return true;
+
+                        }catch(Exception e){
+                            System.out.println("Filewriter exception"+e);
+
+                            return false;
+                        }
+                
+                        }catch(Exception e){
+                            System.out.println("Exception readFileTypeFile"+e);
+                        }
+                    }
+    
+                
+                }
+
+         }catch(Exception e){
+            System.out.println("Exception :: "+e);
             return false;
-        }
+         }
 
-        for (File file : fileList) {
-            if(file.isDirectory()){    
-                readDirectory(apk, file.toString(), fileType);
-            }else{
-                String fileStr = file.toString();
-
-                if(!(fileStr.substring(fileStr.lastIndexOf(".")+1 ).equals(fileType))){
-                    continue;
-                }
-
-
-                int i = 1;
-
-                System.out.println("Reading file :: "+(i++));
-
-                try(BufferedReader br = new BufferedReader(new FileReader(file))){
-                    String line, text = "";
-            
-                    while((line=br.readLine() ) != null){
-                        text += line;
-                        text += "\n";
-                    }
-                    System.out.println(text);
-            
-                    text = replaceWordInText(apk,text);
-            
-                    System.out.println();
-                    System.out.println("changed text :: "+text);
-                    System.out.println();
-            
-                    try(BufferedWriter bw = new BufferedWriter( new FileWriter(file))){
-                        bw.write(text);
-                        System.out.println("Written successfully!!!");
-                    }catch(Exception e){
-                        System.out.println("Filewriter exception"+e);
-                    }
-            
-                    }catch(Exception e){
-                        System.out.println("Exception readFileTypeFile"+e);
-                    }
-                }
-
-            
-            }
+        
 
             return true;
         

@@ -36,16 +36,22 @@ public class ApiController {
         // System.out.println("directory path"+directoryPath);
         // System.out.println("fileTypeToChange"+fileTypeToChange);
 
-        boolean readSuccess = App.readExcelFile(apk, excelFilePath);
+        if(!fileTypeToChange.equals("java")){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+            .body("File type to change should be java");
+        }
+
+
+        boolean readExcelFileSuccess = App.readExcelFile(apk, excelFilePath);
         
-        if(readSuccess == false){
+        if(readExcelFileSuccess == false){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Something wrong while reading excel file");
         }
 
         boolean readDirectorySuccess = App.readDirectory(apk, directoryPath, fileTypeToChange);
 
         if(readDirectorySuccess == false ){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Something wrong while reading directory");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Something went wrong while reading directory or writing files to directory");
         
         }
 
