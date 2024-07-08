@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.tokenizer.tokenizer.models.FileModel;
-import com.example.tokenizer.tokenizer.service.App;
+import com.example.tokenizer.tokenizer.service.AppService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,7 +23,7 @@ public class ApiController {
     
 
     @Autowired
-    App apk;
+    AppService apk;
 
     @PostMapping("/change-file-text")
     public ResponseEntity<String> postMethodName(@RequestBody FileModel fileModel) {
@@ -42,13 +42,13 @@ public class ApiController {
         }
 
 
-        boolean readExcelFileSuccess = App.readExcelFile(apk, excelFilePath);
+        boolean readExcelFileSuccess = AppService.readExcelFile(apk, excelFilePath);
         
         if(readExcelFileSuccess == false){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Something wrong while reading excel file");
         }
 
-        boolean readDirectorySuccess = App.readDirectory(apk, directoryPath, fileTypeToChange);
+        boolean readDirectorySuccess = AppService.readDirectory(apk, directoryPath, fileTypeToChange);
 
         if(readDirectorySuccess == false ){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Something went wrong while reading directory or writing files to directory");
