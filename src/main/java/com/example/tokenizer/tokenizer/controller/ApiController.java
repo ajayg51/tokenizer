@@ -20,11 +20,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RestController
 @RequestMapping("/parse")
 public class ApiController {
-
-    @GetMapping("/get-data")
-    public ResponseEntity<String> getData() {
-        return ResponseEntity.status(200).body("Read successfully");
-    }
     
 
     @Autowired
