@@ -15,9 +15,10 @@ import static org.junit.Assert.assertTrue;
 class TokenizerApplicationTests {
 
 
-	private final String excelFilePath = "C:\\Users\\Monocept\\Desktop\\desktop\\code\\java_tokenizer\\translation.xlsx";
+	private final String excelFilePath = "C:\\Users\\Monocept\\Desktop\\desktop\\code\\tokenizer\\translation.xlsx";
         
-    private final String directoryPath = "C:\\Users\\Monocept\\Desktop\\desktop\\code\\java_tokenizer\\java_files";
+    private final String directoryPath = "C:\\Users\\Monocept\\Desktop\\desktop\\code\\tokenizer\\java_files";
+    
     private final String fileType = "java";
 
 
@@ -26,7 +27,7 @@ class TokenizerApplicationTests {
 
     @Test
     public void TestReadExcelPath(){
-        if(AppService.readExcelFile(apk, null) == true){
+        if(AppService.readExcelFile(apk, excelFilePath) == true){
             assertTrue("Read excel file successfully",true);
         }else{
             assertTrue("Failure read excel file",false);
@@ -38,17 +39,25 @@ class TokenizerApplicationTests {
     @Test
     public void TestReadDirectory(){
         
-        if(AppService.readDirectory(apk, null, null) == true){
-            assertTrue("Directory non-empty",true);
+        if(fileType != "java"){
+            assertTrue("fileType should be java", false);
         }else{
-            assertTrue("Empty directory",false);
+            if(AppService.readDirectory(apk, directoryPath, fileType) == true){
+                assertTrue("Directory non-empty and file rewritten successfully!!",true);
+            }else{
+                assertTrue("Empty directory or something went wrong while file re-writing",false);
+            }
         }
+
+        
         
     }
 
     @Test
     public void TestReplaceWordInText(){
-         if(AppService.replaceWordInText(apk, "").length() == 0){
+
+        // test if key found or not found
+         if(AppService.replaceWordInText(apk, "abcd").length() == 0){
             assertTrue("Text found empty",true);
         }else{
             assertTrue("Text found non-empty",false);

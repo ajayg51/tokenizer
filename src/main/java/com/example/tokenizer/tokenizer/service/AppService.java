@@ -79,7 +79,7 @@ public class AppService {
             }
 
         } catch (Exception e) {
-            System.out.println("Exception : " + e);
+            System.out.println("Exception: Read Excel file () : " + e);
             return false;
         }
 
@@ -177,6 +177,11 @@ public class AppService {
             AppService apk,
             String directoryPath,
             String fileType) {
+
+        if(!fileType.equals("java")){
+            return false;
+        }
+
 
         try {
 
