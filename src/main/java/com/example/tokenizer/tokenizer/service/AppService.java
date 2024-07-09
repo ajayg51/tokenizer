@@ -22,7 +22,6 @@ import java.util.*;
 public class AppService {
     private ArrayList<String> keyList, valueList;
     private Map<String, String> translationMap;
-    private String excelFilePath, directoryPath, fileTypeToChange;
 
     AppService() {
 
@@ -32,20 +31,8 @@ public class AppService {
 
     }
 
-    void setExcelFilePath(String excelFilePath) {
-        this.excelFilePath = excelFilePath;
-    }
-
-    void setDirectoryPath(String directoryPath) {
-        this.directoryPath = directoryPath;
-    }
-
-    void setFileType(String fileTypeToChange) {
-        this.fileTypeToChange = fileTypeToChange;
-    }
-
     /*
-     * @Author Ajay kumar gond
+     *
      * 
      * @param App() : apk object, string : excel file path
      * 
@@ -77,10 +64,8 @@ public class AppService {
                     i++;
                 }
                 i = 0;
-                String value = "";
                 for (Cell cell : row) {
                     if (i > 0) {
-                        // value += cell.toString();
                         apk.valueList.add(cell.toString());
                     }
                     i++;
@@ -90,8 +75,6 @@ public class AppService {
             for (int i = 0; i < apk.keyList.size(); i++) {
                 final String key = apk.keyList.get(i);
                 final String value = apk.valueList.get(i);
-                // if(key != null && key != "" && value != null && value != ""){
-                // }
                 apk.translationMap.put(key, value);
             }
 
@@ -111,7 +94,7 @@ public class AppService {
 
     /*
      * 
-     * @Author Ajay kumar gond
+     * 
      * 
      * @param App() : apk object, string : text to be changed
      * 
@@ -171,7 +154,7 @@ public class AppService {
 
     /*
      * 
-     * @Author Ajay kumar gond
+     * 
      * 
      * @param App() : apk object, string : directory path,
      * 
@@ -258,45 +241,6 @@ public class AppService {
         }
 
         return true;
-
-    }
-
-    /*
-     * @author Ajay kumar gond
-     * 
-     * @param string array args
-     * 
-     * @return void return type
-     * 
-     * 
-     */
-
-    public static void main(String[] args) {
-        // // input :: excel file path, directory path, file types
-
-        // final String excelFilePath =
-        // "C:\\Users\\Monocept\\Desktop\\desktop\\code\\java_tokenizer\\translation.xlsx";
-
-        // final String directoryPath =
-        // "C:\\Users\\Monocept\\Desktop\\desktop\\code\\java_tokenizer\\java_files";
-
-        // final String fileTypeToChange = "java";
-
-        // App apk = new App();
-
-        // apk.setExcelFilePath(excelFilePath);
-        // apk.setDirectoryPath(directoryPath);
-        // apk.setFileType(fileTypeToChange);
-
-        // readExcelFile(apk, excelFilePath);
-
-        // System.out.println(apk.keyList.toString());
-        // System.out.println();
-        // System.out.println(apk.valueList.toString());
-        // System.out.println();
-        // System.out.println(apk.translationMap.toString());
-
-        // readDirectory(apk, directoryPath, fileTypeToChange);
 
     }
 }

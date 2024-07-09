@@ -12,8 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 
@@ -31,11 +29,6 @@ public class ApiController {
         String directoryPath = fileModel.getDirectory_path();
         String fileTypeToChange = fileModel.getFile_type_to_change();
 
-
-        // System.out.println("Excel file path"+excelFilePath);
-        // System.out.println("directory path"+directoryPath);
-        // System.out.println("fileTypeToChange"+fileTypeToChange);
-
         if(!fileTypeToChange.equals("java")){
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
             .body("File type to change should be java");
@@ -45,17 +38,24 @@ public class ApiController {
         boolean readExcelFileSuccess = AppService.readExcelFile(apk, excelFilePath);
         
         if(readExcelFileSuccess == false){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Something wrong while reading excel file");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body("Something wrong while reading excel file");
         }
 
-        boolean readDirectorySuccess = AppService.readDirectory(apk, directoryPath, fileTypeToChange);
+        boolean readDirectorySuccess = 
+                    AppService.readDirectory(apk, 
+                        directoryPath, fileTypeToChange);
 
         if(readDirectorySuccess == false ){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Something went wrong while reading directory or writing files to directory");
-        
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body("""
+                    Something went wrong while reading directory or 
+                    writing files to directory
+                    """);
         }
 
-        return ResponseEntity.status(HttpStatus.OK).body("Files changed successfully");
+        return ResponseEntity.status(HttpStatus.OK)
+            .body("Files changed successfully");
     }
     
 }
